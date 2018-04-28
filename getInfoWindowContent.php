@@ -18,10 +18,10 @@ $todayCondition = $currentDay->weather[0]->description;
 $todayIcon = $currentDay->weather[0]->icon;
 
 
-$tomorrow = date ('F-j', $fiveDay->list[12]->dt);
-$tomorrowTemp = $fiveDay->list[12]->main->temp;
-$tomorrowCondition = $fiveDay->list[12]->weather[0]->description;
-$tomorrowIcon = $fiveDay->list[12]->weather[0]->icon;
+$tomorrow = date ('F-j', $fiveDay->list[8]->dt);
+$tomorrowTemp = $fiveDay->list[8]->main->temp;
+$tomorrowCondition = $fiveDay->list[8]->weather[0]->description;
+$tomorrowIcon = $fiveDay->list[8]->weather[0]->icon;
 
 ?>
 <!DOCTYPE html>

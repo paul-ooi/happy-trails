@@ -11,7 +11,7 @@ $nationalList = [
     "Forillon National Park",
     "Fundy National Park",
     "Georgian Bay Islands National Park",
-    "Glacier National Park (Canada)",
+    "Glacier National Park",
     "Grasslands National Park",
     "Gros Morne National Park",
     "Ivvavik National Park",
@@ -28,7 +28,7 @@ $nationalList = [
     "Qausuittuq National Park",
     "Quttinirpaaq National Park",
     "Riding Mountain National Park",
-    "Rouge Park",
+    "Rouge National Urban Park",
     "Sirmilik National Park",
     "Terra Nova National Park",
     "Thousand Islands National Park",
@@ -41,7 +41,7 @@ $nationalList = [
     "Wood Buffalo National Park",
     "Yoho National Park"];
 
-$ontarioList = [
+$provincialList = [
     "Mount Robson Provincial Park",
     "Hamber Provincial Park",
     "Tatshenshini-Alsek Provincial Park",
@@ -108,10 +108,10 @@ $ontarioList = [
                     <h2>Pick your next Park</h2>
                     <form action="test.php" method="post" name="parks">
                         <div class="container">
-                            <label for="parkListOntario">Central Ontario Parks</label>
-                            <select name="parkListOntario" id="parkListOntario">
-                                <option value="">--Select an Ontario Park--</option>
-                                <?php foreach ($ontarioList as $key => $park) :?>
+                            <label for="parkListProvincial">Provincial Parks</label>
+                            <select name="parkListProvincial" id="parkListProvincial">
+                                <option value="">--Select a Provincial Park--</option>
+                                <?php foreach ($provincialList as $key => $park) :?>
                                     <option value="<?php echo $park ?>"><?php echo $park ?></option><?php endforeach ?>
                             </select>
                         </div>
