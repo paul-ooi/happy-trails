@@ -1,4 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:500,700,900');
+/***************************************************************************
+*
+*------------------TABLE OF CONTENTS----------------------------------------
+
+1) GENERAL STYLES
+2) HEADINGS & LABELS
+
+
+***************************************************************************/
+
+html {
+	box-sizing: border-box;
+}
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
+body {
+	font-family: "Exo", "helvetica", Arial, sans-serif;
+	background-color: rgb(50,64,49);
+	color: rgb(191,157,121);
+}
+
 #map {
 	height: 500px;
-	width: 100%;
+	width: 60%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+footer {
+	padding: 2em;
+}
+
+main > .container {
+	width: 35%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+.container {
+	margin: 2em;
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+#parks label {
+	font-size: 1.5em;
 }

@@ -1,0 +1,47 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+}
+/* 
+#weather {
+    padding:0.5em;
+    margin: 0;
+    width: 100%;
+    margin: 1em auto;
+} */
+
+h2 {
+    margin: 1em;
+}
+
+h3, h4 {
+    margin: 0;
+}
+.day {
+    margin: 0.25em 0.75em 0 0;
+    height: 80px;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.day img {
+    height: 100%;
+    width: auto;
+    margin-right: 0.75em;
+}
+
+.day p {
+    margin: 0;
+    text-transform: capitalize;
+}
+
+/* .gm-style-iw,
+.gm-style-iw div {
+    overflow: visible !important;
+} */
