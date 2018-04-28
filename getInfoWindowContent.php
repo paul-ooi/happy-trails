@@ -33,7 +33,7 @@ $tomorrowIcon = $fiveDay->list[8]->weather[0]->icon;
     </head>
     <body id='weather'>
         <!-- http://openweathermap.org/img/w/ -->
-        <section>
+        <section id="weatherInfo">
             <h2><?php echo $parkName ?></h2>
             <div class="day">
                 <img src="http://openweathermap.org/img/w/<?php echo $todayIcon ?>.png" alt="<?php echo $todayCondition ?>"/>

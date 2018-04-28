@@ -7,12 +7,11 @@ var canada;
 var iw;//infoWindow
 var gcoder;//geoCoder
 var markerArray = []; //use to store markers
-var locationsON;
-var locationsCAN;
+var locationsON;//HOLD PROVINCIAL PARKS
+var locationsCAN;//HOLD NATIONAL PARKS
 
 
 function pageReady() {
-	// alert('connected');
 	$("#parkListProvincial").on("change", function (event) {
 		getParkDetails(event);
 	});
@@ -32,10 +31,6 @@ function pageReady() {
 	//MARK THE PINS
 	locationsON = $("#parkListProvincial option").toArray();
 	locationsCAN = $("#parkListNational option").toArray();
-	// var count=0;
-	// for (var i = 0; i < locationsON.length; i++) {
-	// 	delayedMarker(i);
-	// }
 
 	for (locationName of locationsON) {
 		if (locationName.value == "" || locationName.value == undefined) {
@@ -49,22 +44,9 @@ function pageReady() {
 		}
 		markPin(locationName.value);
 	}
-	// locationsON.forEach(function (locationName) {
-	// })
-	// markPin(locationName)
 }
 
-// function delayedMarker(i) {
-// 	if (i <= locationsON.length && locationsON[i].value != "" && locationsON[i].value != undefined){
-// 		setTimeout(function () { markPin(locationsON[i].value); }, 3000);//set a delay to avoid over_limit error on Google GEocode
-// 	}
-	
-// 	if (i <= locationsCAN.length && locationsCAN[i].value != "" && locationsCAN[i].value != undefined){
-// 		setTimeout(function () { markPin(locationsCAN[i].value); }, 950);//set a delay to avoid over_limit error on Google GEocode
-
-// 	}
-// }
-
+//INITIALIZE MAP ON SITE
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		zoom : 4,
@@ -294,7 +276,6 @@ function initMap() {
 }//end of InitMap
 
 
-// var parkPin;
 function markPin(locationName) {
 	gcoder.geocode({
 				'address': locationName,
@@ -304,7 +285,7 @@ function markPin(locationName) {
 				'region': 'CA'
 			},
 			function (results, status) {
-				//function to handle the results returned from the request
+				//FUNCTION HANDLE THE RESPONSE FROM THE GEOCODER
 				if (status == 'OK') {
 					park = results[0].geometry.location;
 					let parkName = results[0].address_components[0].long_name;
@@ -328,36 +309,27 @@ function markPin(locationName) {
 						map.setCenter(this.getPosition());
 						getParkDetails(this,park);
 					});
-					markerArray.push(parkPin);
-					// markerArray.push({
-					// 	'position': parkPin.position,
-					// 	'name': parkName,
-					// }); //Use this Array to store into a DB or Session so that I don't have to make so many repeat Geocoder requests
-					// console.log(markerArray);
-
+					markerArray.push(parkPin);//USE THIS ARRAY TO SEARCH THROUGH THE DETAILS FOR THE WEATHER API AND MINIMIZE GEOCODER CALLS
 				} else if (status === "OVER_QUERY_LIMIT") {
 						setTimeout(function () {markPin(locationName);}, 200);
 				} else {
 					console.log("something went wrong with the request");
 					console.log(status);
-					// break;
 				}
 			});
 }
 
+//GET WEATHER DETAILS FOR THE PARK
 function getParkDetails(event, position) {
 	var selValue;
-	console.log('inside getParkDetails');
-	console.log(event);
 	if (event.currentTarget === undefined) {
-		selValue = event.getTitle();//get value from clicked Marker
+		selValue = event.getTitle();//ASSIGN TITLE FOR CLICKED MARKER
 	} else {
-		selValue = event.currentTarget.value; //get the value that was selected from Drop Down
+		selValue = event.currentTarget.value; //ASSIGN VALUE IF PARK WAS SELECTED FROM DROPDOWN
 	}
 
-
 	if (selValue == "" || selValue == "--Select Park--") {
-		return; //exit the function if the selected value is empty, the user selected the default Option
+		return; //EXIT FUNCTION IF SELECTED VALUE IS EMPTY OR THE DEFAULT OPTION
 	}
 
 	for (marker of markerArray) {
@@ -377,60 +349,10 @@ function getParkDetails(event, position) {
 					console.log(event.position)
 					console.log(position)
 					iw.open(map, marker);
-					// iw.open(map, { 'lat': marker.position.lat, 'lng': marker.position.lng});
 				}
 			);
 			break;
 		}
 
 	}
-
-
-
-
-	// //Make call to geocode the string of the Selected Value
-	// gcoder.geocode(
-	// 	{
-	// 		'address': selValue,
-	// 		'componentRestrictions': {'country': 'CA'},
-	// 		'region' : 'CA'
-	// 	},
-	// 	function(results, status) {
-	// 		//function to handle the results returned from the request
-	// 		if (status == 'OK') {
-
-	// 			park = results[0].geometry.location;
-	// 			let parkName = results[0].address_components[0].short_name;
-	// 			map.setCenter(park);//Focus the Map's center on the selected park
-	// 			map.setZoom(12);//zoom on the newly selected value
-	// 			//drop a new pin on the map for the newly selected value
-	// 			parkPin = new google.maps.Marker({
-	// 				'position': park,
-	// 				'map': map,
-	// 				'title': parkName
-	// 			});
-
-
-
-	// 			//AJAX CALL TO PAGE THAT HAS THE LAYOUT AND WEATHER INFO
-	// 			$.post (
-	// 				"getInfoWindowContent.php",
-	// 				{
-	// 					'lat' : park.lat,
-	// 					'lon' : park.lng,
-	// 					'park' : parkName
-	// 				},
-	// 				function(content) {
-	// 					//REPLACE CONTENT IN INFO WINDOW AND RE-POSITION TO NEXT PIN
-	// 					iw.setContent(content);
-	// 					iw.open(map, parkPin);
-	// 				}
-	// 			);
-	// 		} else {
-	// 			console.log("something went wrong with the request");
-	// 			console.log(status);
-	// 		}
-	// 	}
-	// );
-
 }//end of getParkDetails

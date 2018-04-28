@@ -25,7 +25,7 @@ body {
 
 #map {
 	height: 500px;
-	width: 60%;
+	width: calc(60% - 20px);
 	vertical-align: middle;
 	display: inline-block;
 }
@@ -35,7 +35,7 @@ footer {
 }
 
 main > .container {
-	width: 35%;
+	width: calc(33% - 20px);
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -50,3 +50,32 @@ main > .container {
 #parks label {
 	font-size: 1.5em;
 }
+
+
+@media all and (max-width:860px) {
+	#instructions p, #parks h2 {
+		position: absolute;
+		left: -10000px;
+	}
+	main>.container {
+		width: 100%;
+		display: block;
+		vertical-align: unset;
+		margin: 0;
+	}
+	#map {
+		width: 100%;
+		vertical-align: unset;
+		display: block;
+	}
+	form .container {
+		margin-left: 0;
+	}
+	form {
+		margin: 0 auto;
+	}
+
+	footer {
+		margin: 0 auto;
+	}
+};

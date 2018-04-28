@@ -8,16 +8,14 @@ html {
 
 body {
 }
-/* 
-#weather {
-    padding:0.5em;
-    margin: 0;
-    width: 100%;
-    margin: 1em auto;
-} */
+
+#weatherInfo {
+    color: rgb(50, 64, 49);
+}
 
 h2 {
     margin: 1em;
+    min-width: 300px
 }
 
 h3, h4 {
@@ -32,7 +30,8 @@ h3, h4 {
 
 .day img {
     height: 100%;
-    width: auto;
+    /* width: auto; */
+    object-fit: contain;
     margin-right: 0.75em;
 }
 
@@ -45,3 +44,12 @@ h3, h4 {
 .gm-style-iw div {
     overflow: visible !important;
 }
+
+@media all and (max-width:400px) {
+    h2 {
+    margin: unset;
+    min-width: unset;
+    max-width: 200px;
+    margin-bottom: 0.5em;
+    }
+};
