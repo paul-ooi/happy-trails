@@ -1,6 +1,8 @@
 <?php
 require_once "weatherFunctions.php";
 
+//USE THIS PAGE TO GATHER THE NAMES OF THE PARKS --NEED HELP TO PULL WIKI DATA
+
 //GET PAGE FROM WIKIPEDIA
 $url ="https://en.wikipedia.org/api/rest_v1/page/segments/List_of_National_Parks_of_Canada";
 $results = getResults($url);
@@ -51,6 +53,6 @@ echo ($results->segmentedContent);
     let provincialJSON = JSON.stringify(list);
 
     //OUTPUT TO THE BROWSER
-    // document.write(nationalJSON);
+    document.write(nationalJSON);
     document.write(provincialJSON);
     </script>
