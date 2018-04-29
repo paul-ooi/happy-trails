@@ -1,3 +1,15 @@
+/***************************************************************************
+*
+*------------------TABLE OF CONTENTS----------------------------------------
+
+1) GENERAL STYLES
+2) HEADINGS & LABELS
+3) MEDIA QUERY
+
+***************************************************************************/
+
+/* 1) GENERAL STYLES */
+
 html {
     box-sizing: border-box;
 }
@@ -6,31 +18,27 @@ html {
     box-sizing: inherit;
 }
 
-body {
-}
-
 #weatherInfo {
     color: rgb(50, 64, 49);
+    margin: 1em 0;
+    position: relative;
+    font-family: "Exo",
+    "helvetica",
+    Arial,
+    sans-serif;
 }
 
-h2 {
-    margin: 1em;
-    min-width: 300px
-}
-
-h3, h4 {
-    margin: 0;
-}
 .day {
-    margin: 0.25em 0.75em 0 0;
+    margin: 0.25em 0.75em;
     height: 80px;
     display: flex;
     flex-flow: column wrap;
+    align-content: start;
+    justify-content: center;
 }
 
 .day img {
     height: 100%;
-    /* width: auto; */
     object-fit: contain;
     margin-right: 0.75em;
 }
@@ -45,6 +53,40 @@ h3, h4 {
     overflow: visible !important;
 }
 
+/* 2) HEADINGS & LABELS */
+#weatherInfo > h2 {
+    margin: 1em;
+    min-width: 250px
+}
+
+#weatherInfo>a,
+#weatherInfo>a:visited,
+#weatherInfo>a:active {
+    font-weight: 700;
+    padding: 0.5em;
+    background-color: rgb(97,124,140);
+    color: rgb(229,247,234);
+    text-decoration: none;
+    border-radius: 0.25em;
+    display: inline-block;
+    position: relative;
+    right: 0px;
+}
+
+.condition {
+    font-weight: 500;
+}
+
+.temperature {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+h3, h4 {
+    margin: 0;
+}
+
+/* 3) MEDIA QUERY */
 @media all and (max-width:400px) {
     h2 {
     margin: unset;

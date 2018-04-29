@@ -289,23 +289,23 @@ function markPin(locationName) {
 				if (status == 'OK') {
 					park = results[0].geometry.location;
 					let parkName = results[0].address_components[0].long_name;
-					if (parkName.includes("Unorganized")) {
-						parkName = locationName;
+					if (parkName != locationName) {
+						parkName = locationName; //IF RESULT BASE IS USING A DIFFERENT NAME THAN THE ONE SEARCHED FOR, RENAME IT
 					}
 
 					//DROP A NEW PIN ON THE MAP FOR THE SPECIFIC PARK
 					let parkPin = new google.maps.Marker({
 						'position': park,
-						'map': map,
+						'map': map,//SET MARKER ON MAP
 						'title': parkName,
-						// 'icon': (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+						// 'icon': BitmapDescriptor.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+						//CUSTOMIZE LABEL AND COLOR OF MARKER
 					});
+					
 
 					//ADD LISTENER FOR WHEN USER CLICKS ON THE MARKER
 					parkPin.addListener('click', function (event) {
-						console.log('inside addListener');
-						console.log(event);
-						map.setZoom(8);
+						map.setZoom(7);
 						map.setCenter(this.getPosition());
 						getParkDetails(this,park);
 					});
@@ -343,11 +343,10 @@ function getParkDetails(event, position) {
 					'park': selValue
 				},
 				function (content) {
+					map.setZoom(7);
+					map.setCenter(marker.getPosition());
 					//REPLACE CONTENT IN INFO WINDOW AND RE-POSITION TO NEXT PIN
 					iw.setContent(content);
-					console.log(this)
-					console.log(event.position)
-					console.log(position)
 					iw.open(map, marker);
 				}
 			);

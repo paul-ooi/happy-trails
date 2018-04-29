@@ -5,10 +5,11 @@
 
 1) GENERAL STYLES
 2) HEADINGS & LABELS
-
+3) MEDIA QUERY
 
 ***************************************************************************/
 
+/* 1) GENERAL STYLES */
 html {
 	box-sizing: border-box;
 }
@@ -40,18 +41,18 @@ main > .container {
 	vertical-align: middle;
 }
 
-
 .container {
 	margin: 2em;
 	display: flex;
 	flex-flow: column nowrap;
 }
 
+/* 2) HEADINGS & LABELS */
 #parks label {
 	font-size: 1.5em;
 }
 
-
+/* 3) MEDIA QUERY */
 @media all and (max-width:860px) {
 	#instructions p, #parks h2 {
 		position: absolute;
