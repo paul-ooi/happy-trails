@@ -18,11 +18,6 @@ function pageReady() {
 	$("#parkListNational").on("change", function (event) {
 		getParkDetails(event);
 	});
-	canada = {
-		lat: 56.130366,
-		lng: -106.346771
-	};
-	initMap();
 
 	//CREATE INFO WINDOW OBJECT
 	iw = new google.maps.InfoWindow();
@@ -50,7 +45,9 @@ function pageReady() {
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		zoom : 4,
-		center: canada,
+		center: {
+			lat: 56.130366,
+			lng: -106.346771},
 		styles: [{
 				"elementType": "geometry",
 				"stylers": [{

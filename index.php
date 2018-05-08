@@ -132,6 +132,6 @@ $provincialList = [
 		<footer>
             <small>HTTP 5203 - Final Project (Paul Ooi, <?php echo date('Y')?>)</small>
 		</footer>
-        <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmze1ztMRH_0Jougry8_lH1DozHPkYhtU&libraries=places"></script>
+        <script defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmze1ztMRH_0Jougry8_lH1DozHPkYhtU&libraries=places&callback=initMap"></script>
 	</body>
 </html>
