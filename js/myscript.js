@@ -27,17 +27,19 @@ function pageReady() {
 	locationsON = $("#parkListProvincial option").toArray();
 	locationsCAN = $("#parkListNational option").toArray();
 
-	for (locationName of locationsON) {
-		if (locationName.value == "" || locationName.value == undefined) {
+	while (locationsCAN.length > 0) {
+		let parkName = locationsCAN.pop();
+		if (parkName.value == "" || parkName.value == undefined) {
 			continue;
 		}
-		markPin(locationName.value);
+		markPin(parkName.value);
 	}
-	for (locationName of locationsCAN) {
-		if (locationName.value == "" || locationName.value == undefined) {
+	while (locationsON.length > 0) {
+		let parkName = locationsON.pop();
+		if (parkName.value == "" || parkName.value == undefined) {
 			continue;
 		}
-		markPin(locationName.value);
+		markPin(parkName.value);
 	}
 }
 
@@ -290,10 +292,11 @@ function markPin(locationName) {
 						parkName = locationName; //IF RESULT BASE IS USING A DIFFERENT NAME THAN THE ONE SEARCHED FOR, RENAME IT
 					}
 
+					
 					//DROP A NEW PIN ON THE MAP FOR THE SPECIFIC PARK
 					let parkPin = new google.maps.Marker({
 						'position': park,
-						'map': map,//SET MARKER ON MAP
+						// 'map': map,//SET MARKER ON MAP
 						'title': parkName,
 						// 'icon': BitmapDescriptor.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
 						//CUSTOMIZE LABEL AND COLOR OF MARKER
@@ -307,6 +310,10 @@ function markPin(locationName) {
 						getParkDetails(this,park);
 					});
 					markerArray.push(parkPin);//USE THIS ARRAY TO SEARCH THROUGH THE DETAILS FOR THE WEATHER API AND MINIMIZE GEOCODER CALLS
+					
+					//SEND TO DATABASE
+					addToDatabase(parkPin);
+
 				} else if (status === "OVER_QUERY_LIMIT") {
 						setTimeout(function () {markPin(locationName);}, 200);
 				} else {
@@ -314,7 +321,7 @@ function markPin(locationName) {
 					console.log(status);
 				}
 			});
-}
+}//end of markPin
 
 //GET WEATHER DETAILS FOR THE PARK
 function getParkDetails(event, position) {
@@ -323,7 +330,7 @@ function getParkDetails(event, position) {
 		selValue = event.getTitle();//ASSIGN TITLE FOR CLICKED MARKER
 	} else {
 		selValue = event.currentTarget.value; //ASSIGN VALUE IF PARK WAS SELECTED FROM DROPDOWN
-	}
+	} 
 
 	if (selValue == "" || selValue == "--Select Park--") {
 		return; //EXIT FUNCTION IF SELECTED VALUE IS EMPTY OR THE DEFAULT OPTION
@@ -352,3 +359,17 @@ function getParkDetails(event, position) {
 
 	}
 }//end of getParkDetails
+
+function addToDatabase(parkPin) {
+	$.post(
+		"parkDB.php",
+		{
+			'name': parkPin.getTitle(),
+			'lat': parkPin.position.lat(),
+			'lng': parkPin.position.lng()
+		},
+		function(response) {
+			console.log(response)
+		}
+	);
+}//end of addToDatabase
