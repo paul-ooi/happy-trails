@@ -54,7 +54,7 @@ $directionsUrl = $baseUrl . $parkUrl;
                 <p class="condition"><?php echo $tomorrow->getWeatherCondition() ?></p>
                 <h4 class="temperature"><?php echo $tomorrow->getTemp() ?> &deg;C</h4>
             </div>
-            <a href="<?php echo $directionsUrl ?>" target="_blank">Get Directions</a>
+            <a href="<?php echo $directionsUrl ?>" target="_blank">Get Directions</a>            
         </section>    
     </body>
 </html>
