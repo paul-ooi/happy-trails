@@ -6,15 +6,17 @@ require_once "weatherFunctions.php";
 //GET PAGE FROM WIKIPEDIA
 $url ="https://en.wikipedia.org/api/rest_v1/page/segments/List_of_National_Parks_of_Canada";
 $results = getResults($url);
+//OUTPUT THE WIKIPEDIA HTML PAGE
 
-// echo "<pre>";
-// var_dump($results);
-echo ($results->segmentedContent);
-// echo "</pre>";
-
-
+$nationalPage = $results->segmentedContent;
+echo $nationalPage;
+// echo ($results->segmentedContent);
+$xml = simplexml_load_string($nationalPage);
+// $tables =  $xml->xpath('//table');
+var_dump($xml);
 ?>
 
+<!-- USE JQUERY TO SELECT THINGS -->
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
 <script>
 
@@ -25,6 +27,7 @@ echo ($results->segmentedContent);
         // console.log(park.title);
         let name = park.title;
         if (!name.includes("Reserve")) {
+            // ADD TO THE LIST IF THE PARK IS NOT DESIGNATED AS A RESERVE
             list.push(name);
         }
     });
@@ -37,7 +40,7 @@ echo ($results->segmentedContent);
         $url = "https://en.wikipedia.org/api/rest_v1/page/segments/List_of_provincial_parks_of_Central_Ontario";
         
         $results = getResults($url);
-        echo ($results->segmentedContent);
+        // echo ($results->segmentedContent);
     ?>
 
     <script>
@@ -53,6 +56,6 @@ echo ($results->segmentedContent);
     let provincialJSON = JSON.stringify(list);
 
     //OUTPUT TO THE BROWSER
-    document.write(nationalJSON);
-    document.write(provincialJSON);
+    // document.write(nationalJSON);
+    // document.write(provincialJSON);
     </script>

@@ -1,5 +1,3 @@
-$("document").ready(pageReady);
-
 var map;
 var parkForm;
 var park;
@@ -11,7 +9,9 @@ var locationsON;//HOLD PROVINCIAL PARKS
 var locationsCAN;//HOLD NATIONAL PARKS
 
 
-function pageReady() {
+window.onload = function () {
+	getParksFromDb();
+
 	$("#parkListProvincial").on("change", function (event) {
 		getParkDetails(event);
 	});
@@ -27,26 +27,29 @@ function pageReady() {
 	locationsON = $("#parkListProvincial option").toArray();
 	locationsCAN = $("#parkListNational option").toArray();
 
-	while (locationsCAN.length > 0) {
-		let parkName = locationsCAN.pop();
-		if (parkName.value == "" || parkName.value == undefined) {
-			continue;
-		}
-		markPin(parkName.value);
-	}
-	while (locationsON.length > 0) {
-		let parkName = locationsON.pop();
-		if (parkName.value == "" || parkName.value == undefined) {
-			continue;
-		}
-		markPin(parkName.value);
-	}
+	// while (locationsCAN.length > 0) {
+	// 	let parkName = locationsCAN.pop();
+	// 	if (parkName.value == "" || parkName.value == undefined) {
+	// 		continue;
+	// 	}
+	// 	markPin(parkName.value);
+	// }
+	// while (locationsON.length > 0) {
+	// 	let parkName = locationsON.pop();
+	// 	if (parkName.value == "" || parkName.value == undefined) {
+	// 		continue;
+	// 	}
+	// 	markPin(parkName.value);
+	// }
 }
 
 //INITIALIZE MAP ON SITE
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		zoom : 4,
+		minZoom: 1,
+		maxZoom: 14, 
+		gestureHandling: 'cooperative',
 		center: {
 			lat: 56.130366,
 			lng: -106.346771},
@@ -287,30 +290,33 @@ function markPin(locationName) {
 				//FUNCTION HANDLE THE RESPONSE FROM THE GEOCODER
 				if (status == 'OK') {
 					park = results[0].geometry.location;
-					let parkName = results[0].address_components[0].long_name;
+					let parkName = results[0].address_components[0].long_name;//IF THERE ARE MULTIPLE HITS FROM THE API, TAKE THE FIRST RESULT
 					if (parkName != locationName) {
 						parkName = locationName; //IF RESULT BASE IS USING A DIFFERENT NAME THAN THE ONE SEARCHED FOR, RENAME IT
 					}
 
 					
-					//DROP A NEW PIN ON THE MAP FOR THE SPECIFIC PARK
-					let parkPin = new google.maps.Marker({
-						'position': park,
-						// 'map': map,//SET MARKER ON MAP
-						'title': parkName,
-						// 'icon': BitmapDescriptor.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
-						//CUSTOMIZE LABEL AND COLOR OF MARKER
-					});
+					// //DROP A NEW PIN ON THE MAP FOR THE SPECIFIC PARK
+					// let parkPin = new google.maps.Marker({
+					// 	'position': park,
+					// 	// 'map': map,//SET MARKER ON MAP
+					// 	'title': parkName,
+					// 	// 'icon': BitmapDescriptor.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+					// 	//CUSTOMIZE LABEL AND COLOR OF MARKER
+					// });
 					
 
-					//ADD LISTENER FOR WHEN USER CLICKS ON THE MARKER
-					parkPin.addListener('click', function (event) {
-						map.setZoom(7);
-						map.setCenter(this.getPosition());
-						getParkDetails(this,park);
-					});
-					markerArray.push(parkPin);//USE THIS ARRAY TO SEARCH THROUGH THE DETAILS FOR THE WEATHER API AND MINIMIZE GEOCODER CALLS
-					
+					// //ADD LISTENER FOR WHEN USER CLICKS ON THE MARKER
+					// parkPin.addListener('click', function (event) {
+					// 	map.setZoom(7);
+					// 	map.setCenter(this.getPosition());
+					// 	getParkDetails(this,park);
+					// });
+					// markerArray.push(parkPin);//USE THIS ARRAY TO SEARCH THROUGH THE DETAILS FOR THE WEATHER API AND MINIMIZE GEOCODER CALLS
+					let parkPin = {
+						'title': parkName,
+						'position': park
+					}
 					//SEND TO DATABASE
 					addToDatabase(parkPin);
 
@@ -360,16 +366,47 @@ function getParkDetails(event, position) {
 	}
 }//end of getParkDetails
 
+
 function addToDatabase(parkPin) {
-	$.post(
-		"parkDB.php",
-		{
-			'name': parkPin.getTitle(),
-			'lat': parkPin.position.lat(),
-			'lng': parkPin.position.lng()
-		},
-		function(response) {
+	$.ajax("models/parkDB.php",{
+			data: {
+				'name': parkPin.title,
+				'lat': parkPin.position.lat(),
+				'lng': parkPin.position.lng()
+			},
+			method: "POST",
+			success: function(response) {
 			console.log(response)
 		}
-	);
+	});
 }//end of addToDatabase
+
+function getParksFromDb() {
+	$.ajax("controllers/parks.php", {
+		method: "GET",
+		data: {
+			'action': 'getAll'
+		}, //WHAT TO SEND IN (GET) REQUEST
+		dataType: "json", //EXPECT JSON IN THE RESPONSE
+		success: function (parks) {
+			for (var park of parks) {
+				// console.log(parks);
+				var parkPin = new google.maps.Marker({
+					'title': park.name,
+					'position': {
+						lat: parseFloat(park.lat),
+						lng: parseFloat(park.lng)
+					},
+					'map': map, //SET MARKER ON MAP
+				});
+				console.log(parkPin);
+				//addListener IS A BUILT IN PROPERTY TO GOOGLE MARKER
+				parkPin.addListener('click', function (event) {
+					map.setZoom(7);
+					map.setCenter(this.getPosition());
+					getParkDetails(this, park.name);
+				});
+			}
+		}
+	})
+}//END OF GETPARKS
