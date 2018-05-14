@@ -1,6 +1,7 @@
 <?php 
-require_once "Weather.php";
-require_once 'weatherFunctions.php';
+require_once "models/Weather.php";
+require_once 'models/weatherFunctions.php';
+
 $loc = [
     'lat' => trim($_POST['lat']),
     'lon' => trim($_POST['lon'])
