@@ -9,8 +9,8 @@ $loc = [
 
 // //TESTING 
 // $loc = [
-//     'lat' => 56.130366,
-//     'lon' => -106.346771
+//     'lat' => 59.478582,
+//     'lon' => -112.876404
 // ];
 
 $parkName = trim($_POST['park']);
@@ -44,15 +44,18 @@ $tomorrow = new Weather(
 );
 
 // echo "<pre>";
+// echo "Current Temp Date" . '</br>';
 // $sec = ($currentDay->dt)/1000;
 // var_dump(date('d-m-Y H:m:s',time($sec)));
 // // var_dump($currentDay);
 // echo "</pre>";
 
 // echo "<pre>";
+// echo "Tomorrow Temp Date at Noon" . '</br>';
 // $sec = ($fiveDay->list[4]->dt)/1000;
 // var_dump(date('d-m-Y H:m:s',time($sec)));
 // echo $fiveDay->list[4]->dt_txt . '</br>';
+// echo "Tomorrow Temp Date at 24hours" . '</br>';
 // $sec1 = ($fiveDay->list[8]->dt)/1000;
 // var_dump(date('d-m-Y H:m:s',time($sec1)));
 // echo $fiveDay->list[8]->dt_txt;
@@ -68,7 +71,7 @@ $directionsUrl = $baseUrl . $parkUrl;
     <head>
         <meta charset="utf-8" />
         <title>Info Window Content</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="css/infoWindow1.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/infoWindow.css" />
     </head>
     <body id='weather'>
         <section id="weatherInfo">

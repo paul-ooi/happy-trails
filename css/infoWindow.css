@@ -59,10 +59,10 @@ html {
     justify-content: space-between
 }
 
+
 /* 2) HEADINGS & LABELS */
 #weatherInfo > h2 {
-    margin: 1em 2em 1em 0;
-    /* min-width: 250px; */
+    margin: 1em 3em 1em 0;
     font-size: 1.2em;
 }
 
@@ -72,7 +72,8 @@ html {
 
 #infoControls a,
 #infoControls a:visited,
-#infoControls a:active, {
+#infoControls a:active, 
+{
     font-weight: 700;
     padding: 0.5em;
     background-color: rgb(97,124,140);
@@ -84,7 +85,8 @@ html {
     right: 0px;
 }
 
-#infoControls button {
+#infoControls .button {
+    border: 0;
     font-weight: 700;
     padding: 0.5em;
     background-color: rgb(97,124,140);
@@ -97,13 +99,14 @@ html {
     font-weight: 500;
 }
 
-.temperature {
+.temperature, .day h3 {
     font-size: 1.5em;
     font-weight: 700;
 }
 
-h3, h4 {
+h4 {
     margin: 0;
+    font-size: 0.8em;
 }
 
 /* 3) MEDIA QUERY */
@@ -114,4 +117,6 @@ h3, h4 {
         max-width: 200px;
         margin-bottom: 0.5em;
     }
+
+
 };
