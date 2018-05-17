@@ -468,7 +468,4 @@ function zoomOut() {
         lat: 56.130366,
         lng: -106.346771
     });
-    map.panToBounds(
-       (53.470672, -131.369203), (77.994765, -81.194075)
-    );
 }//END ZOOMOUT
