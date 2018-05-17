@@ -8,6 +8,8 @@ var gcoder; //geoCoder
 var markerArray = []; //use to store markers
 var locationsProv; //HOLD PROVINCIAL PARKS
 var locationsCAN; //HOLD NATIONAL PARKS
+var customMarkerP;
+var customMarkerN;
 
 //RUN THIS FUNCTION AFTER THE WINDOW FINISHES LOADING
 window.onload = function () {
@@ -17,9 +19,17 @@ window.onload = function () {
         getParkDetails(event);
     });
         
-   	//CREATE INFO WINDOW & GEOCODER OBJECT
+   	//CREATE INFO WINDOW, GEOCODER, MARKER OBJECT
    	iw = new google.maps.InfoWindow();
-   	gcoder = new google.maps.Geocoder(); 
+    gcoder = new google.maps.Geocoder(); 
+    customMarkerP = {
+        url: 'img/p-marker.png',
+        size: new google.maps.Size(19 , 32)
+    }
+    customMarkerN = {
+        url: 'img/n-marker.png',
+        size: new google.maps.Size(19 , 32)
+    }
        
     //GET ALL PARKS FROM THE DATABASE AND PLOT MARKERS
     getParksFromDb();
@@ -345,12 +355,20 @@ function getParksFromDb() {
         success: function (parks) {
             for (var park of parks) {
                 // console.log(parks);
+                var customMarker;
+                if (park.name.includes('National')){
+                    customMarker = customMarkerN;
+                } else {
+                    customMarker = customMarkerP;
+                }
+
                 var parkPin = new google.maps.Marker({
                 	'title': park.name,
                 	'position': {
                         lat: parseFloat(park.lat),
                         lng: parseFloat(park.lng)
                     },
+                    icon: customMarker,
                 	'map': map,//SET MARKER ON MAP
                 });
                 //addListener IS A BUILT IN PROPERTY TO GOOGLE MARKER
@@ -432,7 +450,25 @@ function getParkDetails(event, position) {
             //REPLACE CONTENT IN INFO WINDOW AND RE-POSITION TO SELECTED PIN
             iw.setContent(content);
             iw.open(map, selectedPark);
+
+            //ADD LISTENER TO BUTTON TO ZOOM OUT
+            var seeAllBtn = document.getElementById('seeAll');
+            seeAllBtn.addEventListener('click', zoomOut, false);
         }
     );
 
 } //END OF getParkDetails
+
+
+function zoomOut() {
+    // console.log("inside infowWindow");
+    map.setZoom(2);
+    map.setCenter({
+        //CANADA LOCATION
+        lat: 56.130366,
+        lng: -106.346771
+    });
+    map.panToBounds(
+       (53.470672, -131.369203), (77.994765, -81.194075)
+    );
+}//END ZOOMOUT

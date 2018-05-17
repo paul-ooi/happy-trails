@@ -21,62 +21,56 @@ html {
 body {
 	font-family: "Exo", "helvetica", Arial, sans-serif;
 	background-color: rgb(50,64,49);
-	color: rgb(191,157,121);
+	color: rgb(209,200,169);
 }
 
 #map {
-	height: 500px;
-	width: calc(60% - 20px);
-	vertical-align: middle;
-	display: inline-block;
+	height: 30em;
+}
+main {
+	text-align: center;
 }
 
-footer {
-	padding: 2em;
+header img {
+	max-height: 11em;
 }
 
-main > .container {
-	width: calc(33% - 20px);
-	display: inline-block;
-	vertical-align: middle;
+.row {
+	margin-left: 0;
+	margin-right: 0;
 }
 
-.container {
-	margin: 2em;
-	display: flex;
-	flex-flow: column nowrap;
+.parkList {
+	margin-top: 0.5em;
+	height: 2.25em;
+	padding-left: 0.5em;
+	font-size: 0.85em;
+	width: 100%;
+	border-radius: 0.25em;
+	box-shadow: 0 0 0.75em 0.02em rgb(50, 64, 49) inset;
+	border: thin solid rgb(191, 157, 121);
 }
 
+.markerPin {
+	width: 0.75em;
+	height: auto;	
+}
 /* 2) HEADINGS & LABELS */
 #parks label {
 	font-size: 1.5em;
 }
 
 /* 3) MEDIA QUERY */
+
 @media all and (max-width:860px) {
-	#instructions p, #parks h2 {
+	footer {
+		text-align: center;
+	}
+}
+@media all and (max-width: 576px) {
+	#parkForm label,
+	main h2:not(#parkName) {
 		position: absolute;
 		left: -10000px;
 	}
-	main>.container {
-		width: 100%;
-		display: block;
-		vertical-align: unset;
-		margin: 0;
-	}
-	#map {
-		width: 100%;
-		vertical-align: unset;
-		display: block;
-	}
-	form .container {
-		margin-left: 0;
-	}
-	form {
-		margin: 0 auto;
-	}
-
-	footer {
-		margin: 0 auto;
-	}
-};
+}
