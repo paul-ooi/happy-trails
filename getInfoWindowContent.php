@@ -77,14 +77,14 @@ $directionsUrl = $baseUrl . $parkUrl;
         <section id="weatherInfo">
             <h2 id="parkName" class="text-left"><?php echo $parkName ?></h2>
             <div class="day text-left">
-                <img src="http://openweathermap.org/img/w/<?php echo $today->getIconId() ?>.png" alt="<?php echo $today->getWeatherCondition() ?>"/>
-                <h3>Today: <?php echo $today->getTempDate() ?></h3>
+                <img src="https://openweathermap.org/img/w/<?php echo $today->getIconId() ?>.png" alt="<?php echo $today->getWeatherCondition() ?>"/>
+                <h3>Today:</h3>
                 <p class="condition"><?php echo $today->getWeatherCondition() ?></p>
                 <h4 class="temperature"><?php echo $today->getTemp() ?> &deg;C</h4>
             </div>
             <div class="day text-left">
-                <img src="http://openweathermap.org/img/w/<?php echo $tomorrow->getIconId() ?>.png" alt="<?php echo $tomorrow->getWeatherCondition() ?>"/>
-                <h3>Tomorrow: <?php echo $tomorrow->getTempDate() ?></h3>
+                <img src="https://openweathermap.org/img/w/<?php echo $tomorrow->getIconId() ?>.png" alt="<?php echo $tomorrow->getWeatherCondition() ?>"/>
+                <h3>Tomorrow:</h3>
                 <p class="condition"><?php echo $tomorrow->getWeatherCondition() ?></p>
                 <h4 class="temperature"><?php echo $tomorrow->getTemp() ?> &deg;C</h4>
             </div>
